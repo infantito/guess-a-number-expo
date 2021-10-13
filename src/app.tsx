@@ -1,9 +1,11 @@
-import { registerRootComponent } from 'expo'
 import * as React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
+import { registerRootComponent } from 'expo'
+import AppLoading from 'expo-app-loading'
 
 import { Game, GameOver, StartGame } from '~screens'
 import { Header } from '~components'
+import { fetchFonts } from '~utils'
 
 const styles = StyleSheet.create({
   screen: {
@@ -15,12 +17,23 @@ const App = () => {
   const [state, setState] = React.useState({
     userNumber: null as unknown as number,
     guessRounds: 0,
+    isDataLoaded: false,
   })
 
-  const { userNumber, guessRounds } = state
+  const { userNumber, guessRounds, isDataLoaded } = state
 
   const updater = (newState: Partial<typeof state>) => {
     setState(prevState => ({ ...prevState, ...newState }))
+  }
+
+  if (!isDataLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => updater({ isDataLoaded: true })}
+        onError={error => Alert.alert('Error', JSON.stringify(error))}
+      />
+    )
   }
 
   const handleRestart = () => {
