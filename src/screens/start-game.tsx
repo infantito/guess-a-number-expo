@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { View, Text, StyleSheet, Alert, Keyboard, Button, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Alert, Keyboard, Pressable } from 'react-native'
 
 import type { StartGameProps as Props } from '~typings/screens'
-import { Card, Input, NumberContainer } from '~components'
+import { Button, Card, Input, NumberContainer, Title } from '~components'
 import { COLORS } from '~constants'
 
 const styles = StyleSheet.create({
@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
+    fontFamily: 'open-sans-bold',
     fontSize: 20,
     marginVertical: 10,
   },
@@ -89,14 +90,14 @@ const StartGame = (props: Props) => {
       <Card style={styles.summaryContainer}>
         <Text>You selected</Text>
         <NumberContainer>{selectedNumber}</NumberContainer>
-        <Button title="Start Game" onPress={() => handleStartGame(selectedNumber)} />
+        <Button handlePress={() => handleStartGame(selectedNumber)}>Start Game</Button>
       </Card>
     )
   }
 
   return (
     <Pressable style={styles.screen} onPress={() => Keyboard.dismiss()}>
-      <Text style={styles.title}>Start a New Game!</Text>
+      <Title style={styles.title}>Start a New Game!</Title>
       <Card style={styles.inputContainer}>
         <Text>Select a Number</Text>
         <Input
@@ -112,10 +113,14 @@ const StartGame = (props: Props) => {
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button title="Reset" onPress={handleReset} color={COLORS.accent} />
+            <Button handlePress={handleReset} color={COLORS.accent}>
+              Reset
+            </Button>
           </View>
           <View style={styles.button}>
-            <Button title="Confirm" onPress={handleConfirm} color={COLORS.primary} />
+            <Button handlePress={handleConfirm} color={COLORS.primary}>
+              Confirm
+            </Button>
           </View>
         </View>
       </Card>

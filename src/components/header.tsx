@@ -2,6 +2,7 @@ import * as React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 import type { HeaderProps as Props } from '~typings/components'
+import Title from '~components/title'
 
 const styles = StyleSheet.create({
   header: {
@@ -12,10 +13,6 @@ const styles = StyleSheet.create({
     paddingTop: 36,
     width: '100%',
   },
-  title: {
-    color: '#000',
-    fontSize: 18,
-  },
 })
 
 const Header = (props: Props) => {
@@ -23,7 +20,7 @@ const Header = (props: Props) => {
 
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>{title}</Text>
+      <Title>{title}</Title>
     </View>
   )
 }
