@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, Text, StyleSheet, Alert, Keyboard, Pressable } from 'react-native'
+import { Button as RNButton, View, Text, StyleSheet, Alert, Keyboard, Pressable } from 'react-native'
 
 import type { StartGameProps as Props } from '~typings/screens'
 import { Button, Card, Input, NumberContainer, Title } from '~components'
@@ -113,14 +113,10 @@ const StartGame = (props: Props) => {
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button handlePress={handleReset} color={COLORS.accent}>
-              Reset
-            </Button>
+            <RNButton onPress={handleReset} color={COLORS.accent} title="Reset" />
           </View>
           <View style={styles.button}>
-            <Button handlePress={handleConfirm} color={COLORS.primary}>
-              Confirm
-            </Button>
+            <RNButton onPress={handleConfirm} color={COLORS.primary} title="Confirm" />
           </View>
         </View>
       </Card>

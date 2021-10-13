@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: COLORS.primary,
     borderRadius: 16,
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
     paddingVertical: 12,
   },
   text: {

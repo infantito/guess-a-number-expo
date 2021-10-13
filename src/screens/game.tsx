@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { View, Text, StyleSheet, Alert, Button } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 
 import type { DirectionType, GameProps } from '~typings/screens'
-import { Card, NumberContainer } from '~components'
+import { Button, Card, NumberContainer } from '~components'
 import { DEFAULT_STYLES } from '~constants'
 import { generateRandomBetween } from '~utils'
 
@@ -71,8 +72,12 @@ const Game = (props: GameProps) => {
       <Text style={DEFAULT_STYLES.title}>Opponent's Guess</Text>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
-        <Button title="Lower" onPress={handleNextGuess.bind(this, 'lower')} />
-        <Button title="Greater" onPress={handleNextGuess.bind(this, 'greater')} />
+        <Button handlePress={handleNextGuess.bind(this, 'lower')}>
+          <Ionicons name="md-remove" size={24} color="white" />
+        </Button>
+        <Button handlePress={handleNextGuess.bind(this, 'greater')}>
+          <Ionicons name="md-add" size={24} color="white" />
+        </Button>
       </Card>
     </View>
   )

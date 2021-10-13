@@ -1,7 +1,7 @@
-import type { ButtonProps as RNButtonProps } from 'react-native'
+import type { PressableProps, StyleProp, TextStyle } from 'react-native'
 import * as React from 'react'
 
 export type ButtonProps = {
-  handlePress: () => void
+  handlePress: PressableProps['onPress']
   children: React.ReactNode
-} & Pick<RNButtonProps, 'color'>
+}
