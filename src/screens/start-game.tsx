@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Button as RNButton, View, Text, StyleSheet, Alert, Keyboard, Pressable } from 'react-native'
+import { Button as RNButton, View, Text, StyleSheet, Alert, Keyboard, Pressable, Platform } from 'react-native'
 
 import type { StartGameProps as Props } from '~typings/screens'
-import { Button, Card, Input, NumberContainer, Title } from '~components'
+import { ButtonAndroid, ButtonIos, Card, Input, NumberContainer, Title } from '~components'
 import { COLORS } from '~constants'
 
 const styles = StyleSheet.create({
@@ -84,6 +84,8 @@ const StartGame = (props: Props) => {
   }
 
   let confirmedInput: React.ReactNode = null
+
+  const Button = Platform.OS === 'ios' ? ButtonIos : ButtonAndroid
 
   if (isConfirmed) {
     confirmedInput = (

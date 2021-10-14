@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { View, Text, StyleSheet, Alert, FlatList } from 'react-native'
+import { View, Text, StyleSheet, Alert, FlatList, Platform } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
 import type { DirectionType, GameProps, Item } from '~typings/screens'
-import { Button, Card, FontFamily, NumberContainer } from '~components'
+import { ButtonAndroid, ButtonIos, Card, FontFamily, NumberContainer } from '~components'
 import { DEFAULT_STYLES } from '~constants'
 import { generateRandomBetween } from '~utils'
 
@@ -105,6 +105,8 @@ const Game = (props: GameProps) => {
 
     updater({ currentGuess: nextItem, guesses: [nextItem, ...guesses] })
   }
+
+  const Button = Platform.OS === 'ios' ? ButtonIos : ButtonAndroid
 
   return (
     <View style={styles.screen}>

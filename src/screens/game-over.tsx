@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Platform } from 'react-native'
 
 import type { GameOverProps as Props } from '~typings/screens'
-import { Button, FontFamily, Title } from '~components'
+import { ButtonAndroid, ButtonIos, FontFamily, Title } from '~components'
 import { COLORS } from '~constants'
 
 const styles = StyleSheet.create({
@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
 
 const GameOver = (props: Props) => {
   const { userNumber, roundsNumber, handleRestart } = props
+
+  const Button = Platform.OS === 'ios' ? ButtonIos : ButtonAndroid
 
   return (
     <View style={styles.screen}>

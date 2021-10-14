@@ -1,4 +1,5 @@
-export { default as Button } from './button'
+export { default as ButtonAndroid } from './button.ios'
+export { default as ButtonIos } from './button.ios'
 export { default as Card } from './card'
 export { default as FontFamily } from './font-family'
 export { default as Header } from './header'
