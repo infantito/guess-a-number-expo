@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, StyleSheet, View } from 'react-native'
+import { Alert, SafeAreaView, StyleSheet } from 'react-native'
 import { registerRootComponent } from 'expo'
 import AppLoading from 'expo-app-loading'
 
@@ -57,10 +57,10 @@ const App = () => {
   }
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <Header title="Guess a Number" />
       {content}
-    </View>
+    </SafeAreaView>
   )
 }
 

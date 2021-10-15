@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { View, Text, StyleSheet, Alert, FlatList, Platform } from 'react-native'
+import { View, Text, StyleSheet, Alert, FlatList, Platform, Dimensions, useWindowDimensions } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import * as ScreenOrientation from 'expo-screen-orientation'
 
 import type { DirectionType, GameProps, Item } from '~typings/screens'
 import { ButtonAndroid, ButtonIos, Card, FontFamily, NumberContainer } from '~components'
@@ -16,13 +17,23 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20,
+    marginTop: Dimensions.get('window').height > 600 ? 20 : 5,
     maxWidth: '90%',
     width: 400,
+  },
+  controls: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '80%',
   },
   listContainer: {
     flex: 1,
     width: '60%',
+  },
+  listContainerBig: {
+    flex: 1,
+    width: '80%',
   },
   list: {
     flexGrow: 1,
@@ -50,6 +61,11 @@ const renderListItem = (listLength: number, itemData: { index: number; item: Ite
 }
 
 const Game = (props: GameProps) => {
+  /**
+   * @description the next line keeps `PORTRAIT` mode
+   */
+  // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT)
+
   const { userChoice, handleGameOver } = props
 
   const currentLow = React.useRef(1)
@@ -67,6 +83,8 @@ const Game = (props: GameProps) => {
       guesses: [item] as Item[],
     }
   })
+
+  const dimensions = useWindowDimensions()
 
   const updater = (newState: Partial<typeof state>) => {
     setState(prevState => ({ ...prevState, ...newState }))
@@ -106,7 +124,34 @@ const Game = (props: GameProps) => {
     updater({ currentGuess: nextItem, guesses: [nextItem, ...guesses] })
   }
 
+  const listContainerStyle = dimensions.width < 350 ? styles.listContainerBig : styles.listContainer
+
   const Button = Platform.OS === 'ios' ? ButtonIos : ButtonAndroid
+
+  if (dimensions.width < 500) {
+    return (
+      <View style={styles.screen}>
+        <Text style={DEFAULT_STYLES.title}>Opponent's Guess</Text>
+        <View style={styles.controls}>
+          <Button handlePress={handleNextGuess.bind(this, 'lower')}>
+            <Ionicons name="md-remove" size={24} color="white" />
+          </Button>
+          <NumberContainer>{currentGuess.value}</NumberContainer>
+          <Button handlePress={handleNextGuess.bind(this, 'greater')}>
+            <Ionicons name="md-add" size={24} color="white" />
+          </Button>
+        </View>
+        <View style={listContainerStyle}>
+          <FlatList
+            keyExtractor={item => item.id}
+            data={guesses}
+            renderItem={renderListItem.bind(this, guesses.length)}
+            contentContainerStyle={styles.list}
+          />
+        </View>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.screen}>
@@ -120,7 +165,7 @@ const Game = (props: GameProps) => {
           <Ionicons name="md-add" size={24} color="white" />
         </Button>
       </Card>
-      <View style={styles.listContainer}>
+      <View style={listContainerStyle}>
         <FlatList
           keyExtractor={item => item.id}
           data={guesses}
